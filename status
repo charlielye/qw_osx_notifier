@@ -1,0 +1,7 @@
+#!/bin/bash
+while read s; do
+echo $s
+echo -----
+cat ~/.qwplayers/$s
+echo
+done <~/.qwplayers/qwservers;

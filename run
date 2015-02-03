@@ -1,0 +1,2 @@
+#!/bin/bash
+D=~/.qwplayers; while true; do while read s; do OP=$D/$s; CP=$D/c$s; touch $OP; echo "00000000: ffff ffff 7374 6174 7573 2032 330a" | xxd -r | socat STDIO UDP4-SENDTO:$s:27500 | perl -pe 's/[^!-~\s]//g' | sed 1d | sed '/^$/d' | perl -pe 's|.*?"(.*?)".*|\1|' | perl -pe 's|\\s\\|Spec: |' | grep -v "ServeMe" | sort > $CP; NP=`comm -13 $OP $CP`; for p in $NP; do osascript -e 'display notification "'"$NP"'" with title "'$s'" sound name "Submarine"'; done; mv $CP $OP; done <$D/qwservers; sleep 20; done
